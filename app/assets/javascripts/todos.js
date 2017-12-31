@@ -5,7 +5,6 @@ function toggleDone() {
   var todoId = tableRow.data('id');
   var isCompleted = !tableRow.hasClass("success");
 
-
   $.ajax({
     type: "PUT",
     url: "/todos/" + todoId + ".json",
@@ -13,21 +12,21 @@ function toggleDone() {
       todo: { completed: isCompleted }
     }),
     contentType: "application/json",
-    dataType: "json"})
+    dataType: "json"
+  })
+  .done(function(data) {
+    console.log(data);
 
-    .done(function(data) {
-      console.log(data);
+    tableRow.toggleClass("success", data.completed);
 
-      tableRow.toggleClass("success", data.completed);
-
-      updateCounters();
-    });
+    updateCounters();
+  });
 }
 
 function updateCounters() {
-  $("#total-count").html($(".todo").size());
-  $("#completed-count").html($(".success").size());
-  $("#todo-count").html($(".todo").size() - $(".success").size());
+  $("#total-count").html($(".todo").length);
+  $("#completed-count").html($(".success").length);
+  $("#todo-count").html($(".todo").length - $(".success").length);
 }
 
 function createTodo(title) {
@@ -69,19 +68,18 @@ function createTodo(title) {
     console.log(error)
     error_message = error.responseJSON.title[0];
     showError(error_message);
-  })
-
-  function showError(message) {
-    var errorHelpBlock = $('<span class="help-block"></span>')
-      .attr('id', 'error_message')
-      .text(message);
-
-    $("#formgroup-title")
-      .addClass("has-error")
-      .append(errorHelpBlock);
-  }
+  });
 }
 
+function showError(message) {
+  var errorHelpBlock = $('<span class="help-block"></span>')
+    .attr('id', 'error_message')
+    .text(message);
+
+  $("#formgroup-title")
+    .addClass("has-error")
+    .append(errorHelpBlock);
+}
 
 function resetErrors() {
   $("#error_message").remove();
@@ -91,7 +89,6 @@ function resetErrors() {
 function submitTodo(event) {
   event.preventDefault();
   resetErrors();
-
   createTodo($("#todo_title").val());
   $("#todo_title").val(null);
   updateCounters();
@@ -99,8 +96,24 @@ function submitTodo(event) {
 
 function cleanUpDoneTodos(event) {
   event.preventDefault();
-  $.when($(".success").remove())
-    .then(updateCounters);
+
+  $.each($(".success"), function(index, tableRow) {
+    todoId = $(tableRow).data('id');
+    deleteTodo(todoId);
+  });
+}
+
+function deleteTodo(todoId) {
+  $.ajax({
+    type: "DELETE",
+    url: "/todos/" + todoId + ".json",
+    contentType: "application/json",
+    dataType: "json"
+  })
+  .done(function(data) {
+    $('tr[data-id="'+todoId+'"]').remove();
+    updateCounters();
+  });
 }
 
 $(document).ready(function() {
