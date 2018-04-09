@@ -2,9 +2,6 @@
 
 Sandbox Project, CRUD, AJAX Calls.
 
-- Clone repo
-- Bundle install
-- Rails s
 - Go to http://localhost:3000, https://marcastodolist.herokuapp.com/, or check the images!
 
 
