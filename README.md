@@ -16,8 +16,7 @@ Sandbox Project, CRUD, AJAX Calls.
 
 
 
-Running Locally
-Make sure you have Ruby and Bundler installed.
+## Running Locally
 
 ```
 git clone https://github.com/Casparboetes/ToDoList
