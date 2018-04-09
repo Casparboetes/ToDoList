@@ -1,24 +1,28 @@
-# README
+# To Do List
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sandbox Project, CRUD, AJAX Calls.
 
-Things you may want to cover:
+- Clone repo
+- Bundle install
+- Rails s
+- Go to http://localhost:3000, https://marcastodolist.herokuapp.com/, or check the images!
 
-* Ruby version
 
-* System dependencies
+### Images
 
-* Configuration
+> To Do List
 
-* Database creation
+![todo1](https://user-images.githubusercontent.com/34174855/38488841-f5e5d30a-3be4-11e8-864d-8229fb0067e3.png)
 
-* Database initialization
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+Running Locally
+Make sure you have Ruby and Bundler installed.
 
-* Deployment instructions
-
-* ...
+```
+git clone https://github.com/Casparboetes/ToDoList
+cd ToDoList
+bundle install
+rails db:create db:migrate db:seed
+rails server
+```
